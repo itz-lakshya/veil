@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tailwind Output -->
+  <link rel="stylesheet" href="src/output.css" />
+  <link rel="icon" type="image/png" href="img/favicon.png">
+
+  <title>Veil</title>
+</head>
+
+
+
+<body class="bg-zinc-950 text-white min-h-screen">
+
+  <nav class="border-b border-zinc-800 sticky top-0 bg-zinc-950/90 backdrop-blur z-50">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+
+      <div>
+        <h1 class="text-2xl font-bold">
+          Anonymous Confession
+        </h1>
+
+        <p class="text-zinc-500 text-sm">
+          Say whatever’s on your mind.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-6 text-sm font-medium">
+
+        <button class="text-violet-400 hover:text-violet-300 transition cursor-pointer">
+          HOME
+        </button>
+
+        <button class="text-zinc-400 hover:text-white transition cursor-pointer">
+          TRENDING
+        </button>
+
+      </div>
+
+    </div>
+  </nav>
+
+
+  <div class="max-w-5xl mx-auto px-6 py-8">
+
+    <div class="mb-6">
+
+      <input 
+        id="searchInput"
+        type="text"
+        placeholder="Search confessions..."
+        class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 outline-none focus:border-violet-500 placeholder:text-zinc-500"
+      />
+
+    </div>
+
+
+    <div class="flex flex-wrap items-center gap-3 mb-4">
+
+      <button
+        data-topic="All"
+        class="bg-violet-600 hover:bg-violet-700 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        All
+      </button>
+
+      <button
+        data-topic="Love"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Love
+      </button>
+
+      <button
+        data-topic="College"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        College
+      </button>
+
+      <button
+        data-topic="Mental Health"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Mental Health
+      </button>
+
+      <button
+        data-topic="Work"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Work
+      </button>
+
+      <button
+        id="moreTopicsBtn"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm text-violet-400 cursor-pointer"
+      >
+        + More
+      </button>
+
+    </div>
+
+
+    <div
+      id="moreTopics"
+      class="hidden flex flex-wrap gap-3 mb-8"
+    >
+
+      <button
+        data-topic="Family"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Family
+      </button>
+
+      <button
+        data-topic="Friends"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Friends
+      </button>
+
+      <button
+        data-topic="Relationship"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Relationship
+      </button>
+
+      <button
+        data-topic="Personal"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Personal
+      </button>
+
+      <button
+        data-topic="School"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        School
+      </button>
+
+      <button
+        data-topic="Jobs"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Jobs
+      </button>
+
+      <button
+        data-topic="Social Life"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Social Life
+      </button>
+
+      <button
+        data-topic="Neighbourhood"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Neighbourhood
+      </button>
+
+      <button
+        data-topic="People"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        People
+      </button>
+
+      <button
+        data-topic="Pets"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Pets
+      </button>
+
+      <button
+        data-topic="Trip"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Trip
+      </button>
+
+      <button
+        data-topic="Bad Trip"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Bad Trip
+      </button>
+
+      <button
+        data-topic="Bad Day"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Bad Day
+      </button>
+
+      <button
+        data-topic="Random"
+        class="bg-zinc-900 hover:bg-zinc-800 transition px-4 py-2 rounded-full text-sm cursor-pointer"
+      >
+        Random
+      </button>
+
+    </div>
+
+
+    <!-- <form action="/" method="post"> causes: submit → full page reload -->
+    <form id="confessionForm" class="flex flex-col gap-4 mb-10">
+
+        <select
+            name="topic"
+            class="bg-zinc-900 border border-zinc-800 rounded-xl p-3 outline-none focus:border-violet-500 text-zinc-400 cursor-pointer"
+        >
+            <option value="General">Choose a topic</option>
+
+            <option value="Myself">Myself</option>
+            <option value="Personal">Personal</option>
+            <option value="School">School</option>
+            <option value="College">College</option>
+            <option value="Work">Work</option>
+            <option value="Jobs">Jobs</option>
+            <option value="Family">Family</option>
+            <option value="Friends">Friends</option>
+            <option value="Relationship">Relationship</option>
+            <option value="Love">Love</option>
+            <option value="Mental Health">Mental Health</option>
+            <option value="Social Life">Social Life</option>
+            <option value="Neighbourhood">Neighbourhood</option>
+            <option value="People">People</option>
+            <option value="Pets">Pets</option>
+            <option value="Trip">Trip</option>
+            <option value="Bad Trip">Bad Trip</option>
+            <option value="Bad Day">Bad Day</option>
+            <option value="Random">Random</option>
+        </select>
+
+
+      <textarea
+        name="titleArea" required
+        placeholder="Any thoughts?"
+        class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 h-40 resize-none outline-none focus:border-violet-500"
+      ></textarea>
+
+      <button
+        type="submit"
+        class="bg-violet-600 hover:bg-violet-700 transition rounded-xl py-3 font-medium cursor-pointer"
+      >
+        Post
+      </button>
+
+    </form>
+    
+
+    <div id="feed" class="flex flex-col gap-4"></div>
+
+  </div>
+
+  <script>
+    const moreTopicsBtn = document.getElementById('moreTopicsBtn');
+    const moreTopics = document.getElementById('moreTopics');
+
+    moreTopicsBtn.addEventListener('click', () => {
+
+      moreTopics.classList.toggle('hidden');
+
+      if(moreTopics.classList.contains('hidden')){
+        moreTopicsBtn.textContent = '+ More';
+      }
+
+      else{
+        moreTopicsBtn.textContent = '- Less';
+      }
+
+    });
+  </script>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+# cors → frontend-backend communication
