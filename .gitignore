@@ -1,3 +1,5 @@
 node_modules
 .env
-.md
+*.md
+what i know.md
+what idk.md
