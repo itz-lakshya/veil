@@ -194,4 +194,4 @@ Currently in active development.
 
 # Author
 
-Built by Lakshya.
+Lakshya.
