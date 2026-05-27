@@ -29,12 +29,14 @@ app.get('/api/confessions', async (req, res) => {
     try {
         const topic = req.query.topic || 'All';
         const search = req.query.search || '';
+        const mode = req.query.mode || 'latest';
 
         let query = {};
 
         if(topic !== 'All'){
             query.topic = topic;
         }
+
         if(search.trim() !== ''){
             query.title = {
                 $regex: search,
@@ -42,8 +44,15 @@ app.get('/api/confessions', async (req, res) => {
             };
         }
 
+        // For "Trending or latest feed `mode`"
+        let sortOption = { date: -1 };
+
+        if(mode === 'trending'){
+            sortOption = { likes: -1 };
+        }
+
         const confessions = await Conff.find(query)
-            .sort({ date: -1 });
+            .sort(sortOption);
 
         res.json(confessions);
 

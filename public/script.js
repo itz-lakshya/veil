@@ -2,6 +2,7 @@
 
 let currentTopic = 'All';
 let currentSearch = '';
+let currentFeedMode = 'latest';
 
 
 // Just filling up the form by taking data form frontend to backend
@@ -129,11 +130,27 @@ function attachLikeListeners(){
 
 }
 
+// Attaching event listeners to home and trending button basically color change
+function updateFeedModeButtons(){
+    homeBtn.classList.remove('text-violet-400', 'hover:text-violet-300');
+    homeBtn.classList.add('text-zinc-400', 'hover:text-white');
+    trendingBtn.classList.remove('text-violet-400', 'hover:text-violet-300');
+    trendingBtn.classList.add('text-zinc-400', 'hover:text-white');
+    if(currentFeedMode === 'latest'){
+        homeBtn.classList.remove('text-zinc-400', 'hover:text-white');
+        homeBtn.classList.add('text-violet-400', 'hover:text-violet-300');
+    }
+    else{
+        trendingBtn.classList.remove('text-zinc-400', 'hover:text-white');
+        trendingBtn.classList.add('text-violet-400', 'hover:text-violet-300');
+    }
+}
+
 
 // Loading the feed 
 async function loadConfessions() {
 
-    const res = await fetch(`/api/confessions?topic=${currentTopic}&search=${currentSearch}`);
+    const res = await fetch(`/api/confessions?topic=${currentTopic}&search=${currentSearch}&mode=${currentFeedMode}`);
 
     const confessions = await res.json();
 
@@ -144,6 +161,19 @@ async function loadConfessions() {
 
         feed.innerHTML += CardLoading(confession);
 
+    });
+
+    const homeBtn = document.getElementById('homeBtn');
+    const trendingBtn = document.getElementById('trendingBtn');
+    homeBtn.addEventListener('click', async () => {
+        currentFeedMode = 'latest';
+        updateFeedModeButtons();
+        await loadConfessions();
+    });
+    trendingBtn.addEventListener('click', async () => {
+        currentFeedMode = 'trending';
+        updateFeedModeButtons();
+        await loadConfessions();
     });
 
     attachLikeListeners();
