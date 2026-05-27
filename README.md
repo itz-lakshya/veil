@@ -1,4 +1,4 @@
-# Veil
+# Veil v1.0.0
 
 A modern anonymous confession platform built for open expression, clean interaction, and minimal distraction.
 

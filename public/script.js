@@ -1,5 +1,9 @@
 // Frontend JS
 
+let currentTopic = 'All';
+let currentSearch = '';
+
+
 // Just filling up the form by taking data form frontend to backend
 const form = document.getElementById('confessionForm');
 form.addEventListener('submit', async (e) => {
@@ -66,7 +70,7 @@ function CardLoading(confession){
 
                 <div class="flex items-center gap-2 text-zinc-300 text-sm mb-2">
                     <img data-id="${confession._id}" class="btnLike w-5 cursor-pointer" src="img/unlike.svg" alt="Like Button">
-                    <span class="likeCount">${confession.likes}</span> likes
+                    ${confession.likes} likes
                 </div>
 
             </div>
@@ -102,8 +106,8 @@ function attachLikeListeners(){
                     method: 'POST'
                 });
 
-                const likeText = btn.parentElement.querySelector('.likeCount');
-                likeText.textContent = parseInt(likeText.textContent) + 1;
+                const likeText = btn.nextSibling;
+                likeText.textContent = ` ${parseInt(likeText.textContent) + 1} likes`;
 
                 // await loadConfessions(); this runs the whole thing again thus making the svg unlike again and it refreshes whole UI no need too 
             }
@@ -115,8 +119,8 @@ function attachLikeListeners(){
                     method: 'POST'
                 });
 
-                const likeText = btn.parentElement.querySelector('.likeCount');
-                likeText.textContent = parseInt(likeText.textContent) - 1;
+                const likeText = btn.nextSibling;
+                likeText.textContent = ` ${parseInt(likeText.textContent) - 1} likes`;
 
                 // await loadConfessions();
             }
@@ -129,7 +133,7 @@ function attachLikeListeners(){
 // Loading the feed 
 async function loadConfessions() {
 
-    const res = await fetch('/api/confessions');
+    const res = await fetch(`/api/confessions?topic=${currentTopic}&search=${currentSearch}`);
 
     const confessions = await res.json();
 
@@ -155,7 +159,7 @@ topicButtons.forEach((btn) => {
 
     btn.addEventListener('click', async() => {
 
-        const topic = btn.dataset.topic;
+        currentTopic = btn.dataset.topic;
 
         // Making selected topic purple
         topicButtons.forEach((button) => {
@@ -165,22 +169,9 @@ topicButtons.forEach((btn) => {
         btn.classList.remove('bg-zinc-900','hover:bg-zinc-800');
         btn.classList.add('bg-violet-600','hover:bg-violet-700');
 
-        // The real main.js connection :)
-        const res = await fetch(`/api/confessions/${topic}`);
-        const confessions = await res.json();
+        await loadConfessions();
 
-        const feed = document.getElementById('feed');
-        feed.innerHTML = '';
-
-        confessions.forEach((confession) => {
-
-            feed.innerHTML += CardLoading(confession);
-
-        });
-
-        attachLikeListeners();
-
-        console.log(`${topic}` + " Loading feed");
+        console.log(`${currentTopic}` + " Loading feed");
 
     });
 
@@ -191,18 +182,10 @@ topicButtons.forEach((btn) => {
 const searchInput =
     document.getElementById('searchInput');
 
-    searchInput.addEventListener('input', async () => {
-        const query = searchInput.value;
-        if(query.trim() === ''){
-            await loadConfessions();
-            return;
-        }
-        const res = await fetch(`/api/search/${query}`);
-        const confessions = await res.json();
-        const feed = document.getElementById('feed');
-        feed.innerHTML = '';
-        confessions.forEach((confession) => {
-            feed.innerHTML += CardLoading(confession);
-        });
-        attachLikeListeners();
+searchInput.addEventListener('input', async () => {
+
+    currentSearch = searchInput.value;
+
+    await loadConfessions();
+
 });

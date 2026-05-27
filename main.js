@@ -27,69 +27,32 @@ app.get('/', (req, res) => {
 // Loading confessions form DataBase to our UI
 app.get('/api/confessions', async (req, res) => {
     try {
-        const confessions = await Conff.find()
+        const topic = req.query.topic || 'All';
+        const search = req.query.search || '';
+
+        let query = {};
+
+        if(topic !== 'All'){
+            query.topic = topic;
+        }
+        if(search.trim() !== ''){
+            query.title = {
+                $regex: search,
+                $options: 'i'
+            };
+        }
+
+        const confessions = await Conff.find(query)
             .sort({ date: -1 });
 
         res.json(confessions);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Failed to fetch confessions' });
-    }
-});
-
-// Loading confessions of a particular topic in our UI
-app.get('/api/confessions/:topic', async (req, res) => {
-    try {
-        const topic = req.params.topic;
-
-        let confessions;
-        if(topic === 'All'){
-            confessions = await Conff.find()
-                .sort({ date: -1 });
-        }
-        else{
-            confessions = await Conff.find({topic: topic})
-                .sort({ date: -1 });
-        }
-
-        res.json(confessions);
-
-        // This works too :)
-        // const a = await db.collection('conffs').find({ topic: topic })
-        //         .sort({ date: -1 }).toArray();
-        // res.json(a);
 
     } catch (err) {
         console.error(err);
-        res.status(500).json({error: 'Failed to fetch topics confessions'});
+        res.status(500).json({error: 'Failed to fetch confessions'});
     }
 });
-
-app.get('/api/search/:query', async (req, res) => {
-    try {
-        const query = req.params.query;
-        const confessions = await Conff.find({
-            title: {
-                $regex: query,
-                $options: 'i'
-            }
-            // $or: [
-            //     { title: { $regex: query, $options: 'i' } },
-            //     { topic: { $regex: query, $options: 'i' } }
-            // ]
-        })
-        .sort({ date: -1 });
-
-        res.json(confessions);
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({error: 'Search failed'});
-    }
-});
-
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
-
